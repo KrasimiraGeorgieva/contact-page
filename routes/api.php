@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InquiryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/inquiries', [InquiryController::class, 'index']);
+Route::post('/inquiries', [InquiryController::class, 'store']);
