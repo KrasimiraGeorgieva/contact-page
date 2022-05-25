@@ -5,21 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InquiryRequest;
 use App\Http\Resources\InquiryResource;
 use App\Models\Inquiry;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use App\Notifications\InquiryStored;
+use Illuminate\Support\Facades\Notification;
 
 class InquiryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return InquiryResource::collection(Inquiry::all());
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -30,7 +20,9 @@ class InquiryController extends Controller
     {
         $inquiry = Inquiry::create($request->validated());
 
+        Notification::route('mail', 'test@gmail.com')
+        ->notify(new InquiryStored());
+
         return new InquiryResource($inquiry);
     }
-
 }

@@ -19759,6 +19759,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return storeInquiry(_objectSpread({}, form));
 
               case 2:
+                form.name = '';
+                form.email = '';
+                form.phone = '';
+                form.message = '';
+
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -19847,7 +19853,7 @@ var _hoisted_10 = {
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
-  "class": "inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 rounded-md border border-transparent ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring disabled:opacity-25"
+  "class": "inline-flex items-center px-4 py-2 text-xs font-bold tracking-widest text-white uppercase bg-gray-800 rounded-md border border-transparent ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring disabled:opacity-25"
 }, " Send ", -1
 /* HOISTED */
 );
@@ -19933,7 +19939,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
-/* harmony import */ var _components_inquiries_InquiryCreate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/inquiries/InquiryCreate */ "./resources/js/components/inquiries/InquiryCreate.vue");
+/* harmony import */ var _components_inquiries_InquiryCreate_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/inquiries/InquiryCreate.vue */ "./resources/js/components/inquiries/InquiryCreate.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -19941,7 +19947,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
   components: {
-    InquiryCreate: _components_inquiries_InquiryCreate__WEBPACK_IMPORTED_MODULE_2__["default"]
+    InquiryCreate: _components_inquiries_InquiryCreate_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }
 }).use(_router__WEBPACK_IMPORTED_MODULE_1__["default"]).mount('#app');
 
@@ -20004,169 +20010,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-function useInquiries() {
+function useInquiries(to) {
   var inquiries = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var inquiry = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
   var errors = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
 
-  var getInquiries = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var response;
+  var storeInquiry = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(data) {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/inquiries');
-
-            case 2:
-              response = _context.sent;
-              inquiries.value = response.data.data;
+              errors.value = '';
+              _context.prev = 1;
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/inquiries', data);
 
             case 4:
+              _context.next = 6;
+              return router.push({
+                path: '/contact'
+              });
+
+            case 6:
+              _context.next = 11;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](1);
+
+              if (_context.t0.response.status === 422) {
+                errors.value = _context.t0.response.data.errors;
+              }
+
+            case 11:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[1, 8]]);
     }));
 
-    return function getInquiries() {
+    return function storeInquiry(_x) {
       return _ref.apply(this, arguments);
-    };
-  }();
-
-  var getInquiry = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(id) {
-      var response;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/inquiries/' + id);
-
-            case 2:
-              response = _context2.sent;
-              inquiry.value = response.data.data;
-
-            case 4:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }));
-
-    return function getInquiry(_x) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  var storeInquiry = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(data) {
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              errors.value = '';
-              _context3.prev = 1;
-              _context3.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/inquiries', data);
-
-            case 4:
-              _context3.next = 6;
-              return router.push({
-                name: 'inquiries.index'
-              });
-
-            case 6:
-              _context3.next = 11;
-              break;
-
-            case 8:
-              _context3.prev = 8;
-              _context3.t0 = _context3["catch"](1);
-
-              if (_context3.t0.response.status === 422) {
-                errors.value = _context3.t0.response.data.errors;
-              }
-
-            case 11:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[1, 8]]);
-    }));
-
-    return function storeInquiry(_x2) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  var updateInquiry = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(id) {
-      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              errors.value = '';
-              _context4.prev = 1;
-              _context4.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().put('/api/inquiries/' + id, inquiry.value);
-
-            case 4:
-              _context4.next = 6;
-              return router.push({
-                name: 'inquiries.index'
-              });
-
-            case 6:
-              _context4.next = 11;
-              break;
-
-            case 8:
-              _context4.prev = 8;
-              _context4.t0 = _context4["catch"](1);
-
-              if (_context4.t0.response.status === 422) {
-                errors.value = _context4.t0.response.data.errors;
-              }
-
-            case 11:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4, null, [[1, 8]]);
-    }));
-
-    return function updateInquiry(_x3) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-
-  var destroyInquiry = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(id) {
-      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/api/inquiries/' + id);
-
-            case 2:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5);
-    }));
-
-    return function destroyInquiry(_x4) {
-      return _ref5.apply(this, arguments);
     };
   }();
 
@@ -20174,11 +20062,7 @@ function useInquiries() {
     inquiries: inquiries,
     inquiry: inquiry,
     errors: errors,
-    getInquiries: getInquiries,
-    getInquiry: getInquiry,
-    storeInquiry: storeInquiry,
-    updateInquiry: updateInquiry,
-    destroyInquiry: destroyInquiry
+    storeInquiry: storeInquiry
   };
 }
 
@@ -20201,7 +20085,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/contact',
-  name: 'inquiry.create',
+  name: 'inquiries.create',
   component: _components_inquiries_InquiryCreate__WEBPACK_IMPORTED_MODULE_0__["default"]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue_router__WEBPACK_IMPORTED_MODULE_1__.createRouter)({
@@ -37665,13 +37549,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _InquiryCreate_vue_vue_type_template_id_7626ac9e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InquiryCreate.vue?vue&type=template&id=7626ac9e */ "./resources/js/components/inquiries/InquiryCreate.vue?vue&type=template&id=7626ac9e");
 /* harmony import */ var _InquiryCreate_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InquiryCreate.vue?vue&type=script&lang=js */ "./resources/js/components/inquiries/InquiryCreate.vue?vue&type=script&lang=js");
-/* harmony import */ var D_Projects_contact_page_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_Projects_contact_page_notification_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,D_Projects_contact_page_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_InquiryCreate_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_InquiryCreate_vue_vue_type_template_id_7626ac9e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/inquiries/InquiryCreate.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_Projects_contact_page_notification_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_InquiryCreate_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_InquiryCreate_vue_vue_type_template_id_7626ac9e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/inquiries/InquiryCreate.vue"]])
 /* hot reload */
 if (false) {}
 
