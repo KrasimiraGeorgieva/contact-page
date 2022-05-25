@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import axios from "axios";
 import { useRouter } from 'vue-router';
 
-export default function useInquiries() {
+export default function useInquiries(to) {
     const inquiries = ref([])
     const inquiry = ref([])
     const router = useRouter()
@@ -12,7 +12,7 @@ export default function useInquiries() {
         errors.value = ''
         try {
             await axios.post('/api/inquiries', data)
-            await router.push({name: 'inquiries.create'})
+            await router.push({path: '/contact'})
         } catch (e) {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors

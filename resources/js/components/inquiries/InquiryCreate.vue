@@ -68,6 +68,10 @@ export default {
         const { errors, storeInquiry } = useInquiries()
         const saveInquiry = async () => {
             await storeInquiry({...form});
+            form.name = '';
+            form.email = '';
+            form.phone = '';
+            form.message = '';
         }
 
         return {
